@@ -6,6 +6,7 @@ interface LeaderboardProps {
   entries: CompetitorEntry[];
   mode: "preFinal" | "final";
   showWeights?: boolean;
+  blurPercentages?: boolean;
 }
 
 interface RankBadgeProps {
@@ -13,14 +14,20 @@ interface RankBadgeProps {
 }
 
 const RankBadge: React.FC<RankBadgeProps> = ({ ranking }) => {
+  // Don't show rank badge for entries with insufficient data
+  if (ranking.hasInsufficientData || ranking.rank === -1) {
+    return (
+      <div className="rank-badge">
+        <span className="rank-emoji">❓</span>
+      </div>
+    );
+  }
+
   const badgeInfo = rankToBadge(ranking.rank);
 
   return (
     <div className="rank-badge">
       <span className="rank-emoji">{badgeInfo.emoji}</span>
-      {ranking.rank > 3 && (
-        <span className="rank-number">#{ranking.rank}</span>
-      )}
       {ranking.isTied && (
         <span className="tied-indicator">Tied</span>
       )}
@@ -31,9 +38,10 @@ const RankBadge: React.FC<RankBadgeProps> = ({ ranking }) => {
 interface CompetitorCardProps {
   ranking: RankingResult;
   showWeights: boolean;
+  blurPercentages?: boolean;
 }
 
-const CompetitorCard: React.FC<CompetitorCardProps> = ({ ranking, showWeights }) => {
+const CompetitorCard: React.FC<CompetitorCardProps> = ({ ranking, showWeights, blurPercentages }) => {
   const [imageError, setImageError] = React.useState(false);
   const [imageLoading, setImageLoading] = React.useState(true);
 
@@ -57,12 +65,37 @@ const CompetitorCard: React.FC<CompetitorCardProps> = ({ ranking, showWeights })
             )}
             <RankBadge ranking={ranking} />
           </div>
-          <div className="name-section">
+          <div className={`name-section ${blurPercentages ? 'blurred' : ''}`}>
             <h3 className="competitor-name">{ranking.name}</h3>
             <div className="cheerer-name">กองเชียร์: {ranking.cheerer}</div>
+            <div className="last-weigh-date">
+              วันที่ชั่งล่าสุด: {(() => {
+                const sortedWeighIns = [...ranking.weighIns].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+                const lastDate = sortedWeighIns[0]?.date;
+                return lastDate ? new Date(lastDate).toLocaleDateString('th-TH', {
+                  year: 'numeric',
+                  month: 'short',
+                  day: 'numeric'
+                }) : 'ไม่มีข้อมูล';
+              })()}
+            </div>
             <div className="progress-section">
-              <div className={`percent-loss ${ranking.percentLoss > 0 ? 'losing' : 'gaining'}`}>
-                {ranking.percentLoss > 0 ? '↓' : '↑'} {formatPercentage(ranking.percentLoss)}
+              <div className={`percent-loss ${ranking.hasInsufficientData ? 'insufficient' : ranking.percentLoss > 0 ? 'losing' : 'gaining'}`}>
+                {ranking.hasInsufficientData ? (
+                  blurPercentages ? '?.??%' : 'N/A'
+                ) : (
+                  <>
+                    {ranking.percentLoss > 0 ? '↓' : '↑'} {blurPercentages ? '?.??%' : formatPercentage(Math.abs(ranking.percentLoss))}
+                    {!blurPercentages && Math.abs(ranking.kgLoss) > 0 && (
+                      <span className="kg-loss">
+                        {ranking.percentLoss >= 0
+                          ? ` (${ranking.kgLoss.toFixed(1)} kg)`
+                          : ` (${Math.abs(ranking.kgLoss).toFixed(1)} kg)`
+                        }
+                      </span>
+                    )}
+                  </>
+                )}
               </div>
             </div>
           </div>
@@ -81,7 +114,8 @@ const CompetitorCard: React.FC<CompetitorCardProps> = ({ ranking, showWeights })
 const Leaderboard: React.FC<LeaderboardProps> = ({
   entries,
   mode,
-  showWeights = false
+  showWeights = false,
+  blurPercentages = false
 }) => {
   const rankings = computeRankings(entries, mode);
 
@@ -93,6 +127,7 @@ const Leaderboard: React.FC<LeaderboardProps> = ({
             key={ranking.name}
             ranking={ranking}
             showWeights={showWeights}
+            blurPercentages={blurPercentages}
           />
         ))}
       </div>
@@ -209,18 +244,32 @@ const Leaderboard: React.FC<LeaderboardProps> = ({
           min-width: 0;
         }
 
+        .name-section.blurred {
+          filter: blur(8px);
+          transition: filter 0.3s ease;
+        }
+
         .competitor-name {
-          margin: 0 0 2px 0;
-          font-size: 1.3em;
+          margin: 0 0 6px 0;
+          font-size: 2.2em;
           color: #333;
           font-weight: 600;
+          font-family: 'Poppins', sans-serif;
         }
 
         .cheerer-name {
-          margin: 0 0 6px 0;
-          font-size: 0.9em;
+          margin: 0 0 10px 0;
+          font-size: 1.4em;
           color: #666;
           font-weight: 500;
+          font-family: 'Kanit', sans-serif;
+        }
+
+        .last-weigh-date {
+          margin: 0 0 14px 0;
+          font-size: 1.3em;
+          color: #888;
+          font-weight: 400;
           font-family: 'Kanit', sans-serif;
         }
 
@@ -228,12 +277,15 @@ const Leaderboard: React.FC<LeaderboardProps> = ({
           display: flex;
           align-items: center;
           gap: 12px;
+          flex-wrap: nowrap;
         }
 
         .percent-loss {
-          font-size: 1.3em;
+          font-size: 1.4em;
           font-weight: bold;
           margin: 0;
+          font-family: 'Poppins', sans-serif;
+          white-space: nowrap;
         }
 
         .percent-loss.losing {
@@ -242,6 +294,22 @@ const Leaderboard: React.FC<LeaderboardProps> = ({
 
         .percent-loss.gaining {
           color: #e74c3c;
+        }
+
+        .percent-loss.insufficient {
+          color: #6c757d;
+        }
+
+        .percent-loss.blurred {
+          filter: blur(8px);
+          transition: filter 0.3s ease;
+        }
+
+        .kg-loss {
+          font-size: 1.0em;
+          opacity: 0.8;
+          font-weight: 500;
+          font-family: 'Poppins', sans-serif;
         }
 
         .weight-change {

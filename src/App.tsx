@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Leaderboard from './components/Leaderboard';
 import WeighInPanel from './components/WeighInPanel.tsx';
 import { CompetitorEntry } from './utils/logic';
+import { LocalStorageService } from './services/localStorageService';
 
 const competitorData: CompetitorEntry[] = [
   {
@@ -87,22 +88,63 @@ const competitorData: CompetitorEntry[] = [
 function App() {
   const [competitors, setCompetitors] = useState<CompetitorEntry[]>(competitorData);
   const [showAdmin, setShowAdmin] = useState(false);
+  const [blurPercentages, setBlurPercentages] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  // Load competitors from Supabase on component mount
+  useEffect(() => {
+    loadCompetitors();
+  }, []);
+
+  const loadCompetitors = () => {
+    try {
+      setLoading(true);
+      const stored = LocalStorageService.getAllCompetitors();
+      if (stored.length > 0) {
+        setCompetitors(stored);
+      } else {
+        // Initialize with sample data if no stored data
+        LocalStorageService.saveAllCompetitors(competitorData);
+        setCompetitors(competitorData);
+      }
+      setError(null);
+    } catch (err) {
+      console.error('Failed to load competitors:', err);
+      setError('Failed to load data from local storage. Using sample data.');
+      setCompetitors(competitorData);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const addWeighIn = (competitorName: string, date: string, weight: number) => {
-    setCompetitors(prev => prev.map(competitor => {
-      if (competitor.name === competitorName) {
-        const newWeighIns = [...competitor.weighIns, { date, weight }];
-        const sortedWeighIns = newWeighIns.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
-        const latestWeight = sortedWeighIns[sortedWeighIns.length - 1].weight;
+    try {
+      // Add to local storage
+      LocalStorageService.addWeighIn(competitorName, date, weight);
 
-        return {
-          ...competitor,
-          weighIns: sortedWeighIns,
-          currentWeight: latestWeight
-        };
-      }
-      return competitor;
-    }));
+      // Update local state
+      setCompetitors(prev => prev.map(competitor => {
+        if (competitor.name === competitorName) {
+          const newWeighIns = [...competitor.weighIns, { date, weight }];
+          const sortedWeighIns = newWeighIns.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+          const latestWeight = sortedWeighIns[sortedWeighIns.length - 1].weight;
+
+          return {
+            ...competitor,
+            weighIns: sortedWeighIns,
+            currentWeight: latestWeight
+          };
+        }
+        return competitor;
+      }));
+
+      // Refresh data to ensure consistency
+      loadCompetitors();
+    } catch (err) {
+      console.error('Failed to add weigh-in:', err);
+      alert('Failed to add weigh-in. Please try again.');
+    }
   };
 
   return (
@@ -129,7 +171,8 @@ function App() {
             justifyContent: 'center',
             gap: '15px',
             fontWeight: 'bold',
-            textShadow: '2px 2px 4px rgba(0,0,0,0.1)'
+            textShadow: '2px 2px 4px rgba(0,0,0,0.1)',
+            fontFamily: 'Poppins, sans-serif'
           }}>
             <img
               src="GMF Circle Black.png"
@@ -145,38 +188,96 @@ function App() {
           <p style={{
             fontSize: '1.1em',
             color: '#666',
-            margin: '0 0 20px 0'
+            margin: '0 0 20px 0',
+            fontFamily: 'Poppins, sans-serif'
           }}>
             Leaderboard Rankings
           </p>
 
-          <button
-            onClick={() => setShowAdmin(!showAdmin)}
-            style={{
-              padding: '10px 20px',
-              border: 'none',
-              borderRadius: '25px',
-              background: showAdmin ? '#c0392b' : '#e67e22',
-              color: 'white',
-              cursor: 'pointer',
-              fontWeight: '600',
-              transition: 'all 0.3s ease'
-            }}
-          >
-            {showAdmin ? '📊 Show Leaderboard' : '⚙️ Admin Panel'}
-          </button>
+          <div style={{ display: 'flex', gap: '15px', justifyContent: 'center', flexWrap: 'wrap' }}>
+            <button
+              onClick={() => setShowAdmin(!showAdmin)}
+              style={{
+                padding: '12px',
+                border: 'none',
+                borderRadius: '50%',
+                background: showAdmin ? '#c0392b' : '#e67e22',
+                color: 'white',
+                cursor: 'pointer',
+                fontSize: '1.2em',
+                width: '45px',
+                height: '45px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                transition: 'all 0.3s ease'
+              }}
+              title={showAdmin ? 'Show Leaderboard' : 'Admin Panel'}
+            >
+              {showAdmin ? '📊' : '⚙️'}
+            </button>
+
+            {!showAdmin && (
+              <button
+                onClick={() => setBlurPercentages(!blurPercentages)}
+                style={{
+                  padding: '12px',
+                  border: 'none',
+                  borderRadius: '50%',
+                  background: blurPercentages ? '#27ae60' : '#8e44ad',
+                  color: 'white',
+                  cursor: 'pointer',
+                  fontSize: '1.2em',
+                  width: '45px',
+                  height: '45px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  transition: 'all 0.3s ease'
+                }}
+                title={blurPercentages ? 'Reveal Percentages' : 'Blur for Screenshot'}
+              >
+                {blurPercentages ? '👁️' : '🫣'}
+              </button>
+            )}
+          </div>
         </header>
 
-        {showAdmin ? (
+
+        {error && (
+          <div style={{
+            background: '#fff3cd',
+            color: '#856404',
+            padding: '12px 20px',
+            borderRadius: '8px',
+            marginBottom: '20px',
+            border: '1px solid #ffeaa7'
+          }}>
+            ⚠️ {error}
+          </div>
+        )}
+
+        {loading ? (
+          <div style={{
+            textAlign: 'center',
+            padding: '60px 20px',
+            color: '#666'
+          }}>
+            <div style={{ fontSize: '2em', marginBottom: '20px' }}>⏳</div>
+            <div>Loading competitors data...</div>
+          </div>
+        ) : showAdmin ? (
           <WeighInPanel
             competitors={competitors}
             onAddWeighIn={addWeighIn}
+            onDataChange={loadCompetitors}
           />
         ) : (
           <Leaderboard
             entries={competitors}
             mode="preFinal"
             showWeights={false}
+            blurPercentages={blurPercentages}
           />
         )}
       </div>
