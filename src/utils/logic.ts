@@ -31,19 +31,36 @@ export interface RankingResult {
 
 export function computeRankings(entries: CompetitorEntry[], mode: "preFinal" | "final"): RankingResult[] {
   const processedEntries = entries.map(entry => {
+    // Check if we have enough data points for meaningful calculation
+    const hasInsufficientData = entry.weighIns.length <= 1;
+
     let currentWeight = entry.currentWeight;
+    let baselineWeight = entry.baselineWeight;
+    let percentLoss = 0;
+    let kgLoss = 0;
+
+    if (!hasInsufficientData) {
+      // Sort weigh-ins by date to get first and latest
+      const sortedWeighIns = [...entry.weighIns].sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+
+      // Use first weigh-in as baseline and latest weigh-in as current
+      baselineWeight = sortedWeighIns[0].weight; // First weigh-in
+      currentWeight = sortedWeighIns[sortedWeighIns.length - 1].weight; // Latest weigh-in
+
+      // Calculate percentage and kg loss (latest vs first)
+      percentLoss = ((baselineWeight - currentWeight) / baselineWeight) * 100;
+      kgLoss = baselineWeight - currentWeight;
+
+      // Debug log for calculation verification
+      console.log(`${entry.name}: Baseline=${baselineWeight}kg, Current=${currentWeight}kg, Loss=${percentLoss.toFixed(2)}%, ${kgLoss.toFixed(1)}kg`);
+    }
+
     let waApplied = entry.waApplied || false;
 
     if (mode === "final") {
       currentWeight = applyAntiDehydrationRule(entry);
       waApplied = currentWeight !== entry.currentWeight;
     }
-
-    // Check if we have enough data points for meaningful calculation
-    const hasInsufficientData = entry.weighIns.length <= 1;
-
-    const percentLoss = hasInsufficientData ? -1 : ((entry.baselineWeight - currentWeight) / entry.baselineWeight) * 100;
-    const kgLoss = hasInsufficientData ? -1 : entry.baselineWeight - currentWeight;
 
     // Calculate weight trend comparing latest vs first weigh-in
     let weightChangePercent = 0;
@@ -68,8 +85,8 @@ export function computeRankings(entries: CompetitorEntry[], mode: "preFinal" | "
 
     return {
       name: entry.name,
-      percentLoss: hasInsufficientData ? -1 : Math.max(0, percentLoss),
-      kgLoss: hasInsufficientData ? -1 : Math.max(0, kgLoss),
+      percentLoss: hasInsufficientData ? -1 : percentLoss,
+      kgLoss: hasInsufficientData ? -1 : kgLoss,
       profilePic: entry.profilePic,
       cheerer: entry.cheerer,
       weighIns: entry.weighIns,

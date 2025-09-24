@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Leaderboard from './components/Leaderboard';
-import WeighInPanel from './components/WeighInPanel.tsx';
+import WeighInPanel from './components/WeighInPanel';
 import { CompetitorEntry } from './utils/logic';
 import { LocalStorageService } from './services/localStorageService';
 
@@ -148,140 +148,104 @@ function App() {
   };
 
   return (
-    <div style={{
-      minHeight: '100vh',
-      background: 'linear-gradient(135deg, #2c3e50 0%, #34495e 100%)',
-      padding: '20px'
-    }}>
-      <div style={{
-        maxWidth: '1600px',
-        margin: '0 auto',
-        background: 'white',
-        borderRadius: '20px',
-        padding: '30px',
-        boxShadow: '0 20px 40px rgba(0,0,0,0.1)'
-      }}>
-        <header style={{ textAlign: 'center', marginBottom: '40px' }}>
-          <h1 style={{
-            fontSize: '2.5em',
-            margin: '0 0 10px 0',
-            color: '#e67e22',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            gap: '15px',
-            fontWeight: 'bold',
-            textShadow: '2px 2px 4px rgba(0,0,0,0.1)',
-            fontFamily: 'Poppins, sans-serif'
-          }}>
-            <img
-              src="GMF Circle Black.png"
-              alt="GMF Logo"
-              style={{
-                width: '60px',
-                height: '60px',
-                objectFit: 'contain'
-              }}
-            />
-            GMF Biggest Loser 2025
-          </h1>
-          <p style={{
-            fontSize: '1.1em',
-            color: '#666',
-            margin: '0 0 20px 0',
-            fontFamily: 'Poppins, sans-serif'
-          }}>
-            Leaderboard Rankings
-          </p>
+    <>
+      <section className="hero">
+        <h1 className="title">
+          <img
+            src="GMF Circle Black.png"
+            alt="GMF Logo"
+            style={{
+              height: 'clamp(80px, 12vw, 180px)',
+              width: 'auto',
+              objectFit: 'contain'
+            }}
+          />
+          GMF BIGGEST LOSER
+        </h1>
+        <span className="belt" aria-hidden="true"></span>
 
-          <div style={{ display: 'flex', gap: '15px', justifyContent: 'center', flexWrap: 'wrap' }}>
+        <div style={{ display: 'flex', gap: '15px', justifyContent: 'center', flexWrap: 'wrap', marginTop: '20px' }}>
+          <button
+            onClick={() => setShowAdmin(!showAdmin)}
+            style={{
+              padding: '12px',
+              border: 'none',
+              borderRadius: '50%',
+              background: showAdmin ? '#c0392b' : '#e67e22',
+              color: 'white',
+              cursor: 'pointer',
+              fontSize: '1.2em',
+              width: '45px',
+              height: '45px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              transition: 'all 0.3s ease'
+            }}
+            title={showAdmin ? 'Show Leaderboard' : 'Admin Panel'}
+          >
+            {showAdmin ? '📊' : '⚙️'}
+          </button>
+
+          {!showAdmin && (
             <button
-              onClick={() => setShowAdmin(!showAdmin)}
-              style={{
-                padding: '12px',
-                border: 'none',
-                borderRadius: '50%',
-                background: showAdmin ? '#c0392b' : '#e67e22',
-                color: 'white',
-                cursor: 'pointer',
-                fontSize: '1.2em',
-                width: '45px',
-                height: '45px',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                transition: 'all 0.3s ease'
-              }}
-              title={showAdmin ? 'Show Leaderboard' : 'Admin Panel'}
+              className="reveal-btn"
+              onClick={() => setBlurPercentages(!blurPercentages)}
+              title={blurPercentages ? 'Reveal Percentages' : 'Blur for Screenshot'}
             >
-              {showAdmin ? '📊' : '⚙️'}
+              {blurPercentages ? '👁️ Reveal' : '🫣 Hide'}
             </button>
+          )}
+        </div>
+      </section>
 
-            {!showAdmin && (
-              <button
-                onClick={() => setBlurPercentages(!blurPercentages)}
-                style={{
-                  padding: '12px',
-                  border: 'none',
-                  borderRadius: '50%',
-                  background: blurPercentages ? '#27ae60' : '#8e44ad',
-                  color: 'white',
-                  cursor: 'pointer',
-                  fontSize: '1.2em',
-                  width: '45px',
-                  height: '45px',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  transition: 'all 0.3s ease'
-                }}
-                title={blurPercentages ? 'Reveal Percentages' : 'Blur for Screenshot'}
-              >
-                {blurPercentages ? '👁️' : '🫣'}
-              </button>
-            )}
+      {error && (
+        <div style={{
+          background: '#fff3cd',
+          color: '#856404',
+          padding: '12px 20px',
+          borderRadius: '8px',
+          margin: '20px auto',
+          maxWidth: '1600px',
+          border: '1px solid #ffeaa7'
+        }}>
+          ⚠️ {error}
+        </div>
+      )}
+
+      {loading ? (
+        <section className="leaderboard center">
+          <div style={{ textAlign: 'center', color: '#fff' }}>
+            <div style={{ fontSize: '3em', marginBottom: '20px' }}>⏳</div>
+            <div style={{ fontSize: '1.2em' }}>Loading competitors data...</div>
           </div>
-        </header>
-
-
-        {error && (
-          <div style={{
-            background: '#fff3cd',
-            color: '#856404',
-            padding: '12px 20px',
-            borderRadius: '8px',
-            marginBottom: '20px',
-            border: '1px solid #ffeaa7'
-          }}>
-            ⚠️ {error}
-          </div>
-        )}
-
-        {loading ? (
-          <div style={{
-            textAlign: 'center',
-            padding: '60px 20px',
-            color: '#666'
-          }}>
-            <div style={{ fontSize: '2em', marginBottom: '20px' }}>⏳</div>
-            <div>Loading competitors data...</div>
-          </div>
-        ) : showAdmin ? (
+        </section>
+      ) : showAdmin ? (
+        <section style={{
+          maxWidth: '1600px',
+          margin: '0 auto',
+          padding: '20px',
+          background: 'rgba(255,255,255,0.95)',
+          borderRadius: '20px',
+          minHeight: '70vh'
+        }}>
           <WeighInPanel
             competitors={competitors}
             onAddWeighIn={addWeighIn}
             onDataChange={loadCompetitors}
           />
-        ) : (
+        </section>
+      ) : (
+        <section className="leaderboard">
           <Leaderboard
             entries={competitors}
             mode="preFinal"
             showWeights={false}
             blurPercentages={blurPercentages}
           />
-        )}
-      </div>
-    </div>
+        </section>
+      )}
+    </>
   );
 }
 
