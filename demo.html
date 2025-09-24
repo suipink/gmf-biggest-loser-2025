@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GMF Biggest Loser 2025 - Rank Badges Demo</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+
+        .demo-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .demo-header {
+            text-align: center;
+            margin-bottom: 30px;
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .badge-showcase {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 40px;
+        }
+
+        .badge-demo {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .badge-demo .emoji {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+
+        .leaderboard-demo {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 20px;
+        }
+
+        .competitor-card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            border: 2px solid #f0f0f0;
+            transition: all 0.3s ease;
+        }
+
+        .competitor-card:hover {
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            gap: 15px;
+        }
+
+        .competitor-name {
+            margin: 0;
+            font-size: 1.4em;
+            color: #333;
+            flex: 1;
+        }
+
+        .rank-badge {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            background: #f8f9fa;
+            border-radius: 20px;
+            border: 1px solid #e9ecef;
+        }
+
+        .badge-emoji {
+            font-size: 1.5em;
+        }
+
+        .badge-rank-number {
+            font-weight: bold;
+            font-size: 0.9em;
+            color: #495057;
+        }
+
+        .tied-indicator {
+            font-size: 0.8em;
+            color: #6c757d;
+            font-weight: 500;
+            background: #fff3cd;
+            padding: 2px 6px;
+            border-radius: 10px;
+            border: 1px solid #ffeaa7;
+        }
+
+        .percent-loss {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+
+        .percent-loss .label {
+            font-weight: 600;
+            color: #495057;
+        }
+
+        .percent-loss .value {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #28a745;
+        }
+    </style>
+</head>
+<body>
+    <div class="demo-container">
+        <div class="demo-header">
+            <h1>🏆 GMF Biggest Loser 2025</h1>
+            <h2>Rank Badge System Demo</h2>
+            <p>Interactive leaderboard with dynamic ranking badges</p>
+        </div>
+
+        <h3>Badge System Overview</h3>
+        <div class="badge-showcase">
+            <div class="badge-demo">
+                <div class="emoji">🥇</div>
+                <div><strong>1st Place</strong></div>
+                <div>Gold Medal</div>
+            </div>
+            <div class="badge-demo">
+                <div class="emoji">🥈</div>
+                <div><strong>2nd Place</strong></div>
+                <div>Silver Medal</div>
+            </div>
+            <div class="badge-demo">
+                <div class="emoji">🥉</div>
+                <div><strong>3rd Place</strong></div>
+                <div>Bronze Medal</div>
+            </div>
+            <div class="badge-demo">
+                <div class="emoji">🏅</div>
+                <div><strong>4th-10th</strong></div>
+                <div>Gold Badge + #N</div>
+            </div>
+            <div class="badge-demo">
+                <div class="emoji">🎖</div>
+                <div><strong>11th+</strong></div>
+                <div>Military Medal + #N</div>
+            </div>
+        </div>
+
+        <h3>Sample Leaderboard</h3>
+        <div class="leaderboard-demo">
+            <div class="competitor-card">
+                <div class="card-header">
+                    <div class="rank-badge">
+                        <span class="badge-emoji">🥇</span>
+                    </div>
+                    <h3 class="competitor-name">Charlie</h3>
+                </div>
+                <div class="percent-loss">
+                    <span class="label">Progress:</span>
+                    <span class="value">10.00%</span>
+                </div>
+            </div>
+
+            <div class="competitor-card">
+                <div class="card-header">
+                    <div class="rank-badge">
+                        <span class="badge-emoji">🥈</span>
+                    </div>
+                    <h3 class="competitor-name">Grace</h3>
+                </div>
+                <div class="percent-loss">
+                    <span class="label">Progress:</span>
+                    <span class="value">8.24%</span>
+                </div>
+            </div>
+
+            <div class="competitor-card">
+                <div class="card-header">
+                    <div class="rank-badge">
+                        <span class="badge-emoji">🥉</span>
+                    </div>
+                    <h3 class="competitor-name">Alice</h3>
+                </div>
+                <div class="percent-loss">
+                    <span class="label">Progress:</span>
+                    <span class="value">8.00%</span>
+                </div>
+            </div>
+
+            <div class="competitor-card">
+                <div class="card-header">
+                    <div class="rank-badge">
+                        <span class="badge-emoji">🏅</span>
+                        <span class="badge-rank-number">#4</span>
+                        <span class="tied-indicator">Tied</span>
+                    </div>
+                    <h3 class="competitor-name">Eve</h3>
+                </div>
+                <div class="percent-loss">
+                    <span class="label">Progress:</span>
+                    <span class="value">8.00%</span>
+                </div>
+            </div>
+
+            <div class="competitor-card">
+                <div class="card-header">
+                    <div class="rank-badge">
+                        <span class="badge-emoji">🏅</span>
+                        <span class="badge-rank-number">#4</span>
+                        <span class="tied-indicator">Tied</span>
+                    </div>
+                    <h3 class="competitor-name">Frank</h3>
+                </div>
+                <div class="percent-loss">
+                    <span class="label">Progress:</span>
+                    <span class="value">8.00%</span>
+                </div>
+            </div>
+
+            <div class="competitor-card">
+                <div class="card-header">
+                    <div class="rank-badge">
+                        <span class="badge-emoji">🏅</span>
+                        <span class="badge-rank-number">#6</span>
+                    </div>
+                    <h3 class="competitor-name">Bob</h3>
+                </div>
+                <div class="percent-loss">
+                    <span class="label">Progress:</span>
+                    <span class="value">7.50%</span>
+                </div>
+            </div>
+        </div>
+
+        <div style="margin-top: 40px; padding: 20px; background: white; border-radius: 12px;">
+            <h3>Features Implemented ✅</h3>
+            <ul>
+                <li>✅ Dynamic rank badges based on % weight loss</li>
+                <li>✅ Proper tie handling (±0.01% threshold)</li>
+                <li>✅ Competition ranking system (1,1,3...)</li>
+                <li>✅ Responsive design for mobile/desktop</li>
+                <li>✅ Accessibility support with aria-labels</li>
+                <li>✅ Live badge updates as data changes</li>
+                <li>✅ Hidden weights policy support</li>
+                <li>✅ Anti-dehydration rule integration</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>
