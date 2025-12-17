@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { LocalStorageService } from '../services/localStorageService';
 import { CompetitorEntry } from '../utils/logic';
 import LocalProfilePictureUpload from './LocalProfilePictureUpload';
@@ -14,6 +14,14 @@ const CompetitorEditor: React.FC<CompetitorEditorProps> = ({ competitor, onUpdat
   const [newCheerer, setNewCheerer] = useState(competitor.cheerer);
   const [editingWeighIn, setEditingWeighIn] = useState<string | null>(null);
   const [editWeighInData, setEditWeighInData] = useState<{ date: string; weight: string }>({ date: '', weight: '' });
+
+  // Reset state when competitor changes
+  useEffect(() => {
+    setNewName(competitor.name);
+    setNewCheerer(competitor.cheerer);
+    setEditingWeighIn(null);
+    setEditWeighInData({ date: '', weight: '' });
+  }, [competitor.name, competitor.cheerer]);
 
   const handleSave = () => {
     try {
@@ -76,10 +84,19 @@ const CompetitorEditor: React.FC<CompetitorEditorProps> = ({ competitor, onUpdat
     }
   };
 
-  const handleDeleteWeighIn = (date: string) => {
-    if (confirm(`Are you sure you want to delete the weigh-in from ${date}?`)) {
+  const handleDeleteWeighIn = (date: string, weight: number) => {
+    if (confirm(`Are you sure you want to delete the weigh-in from ${date} (${weight}kg)?`)) {
       try {
-        LocalStorageService.deleteWeighIn(competitor.name, date);
+        console.log(`🗑️ DELETING: ${competitor.name} on ${date} with weight ${weight}kg`);
+        console.log(`📊 BEFORE DELETE:`, competitor.weighIns);
+
+        LocalStorageService.deleteWeighIn(competitor.name, date, weight);
+
+        // Check what's left after deletion
+        const updatedCompetitors = LocalStorageService.getAllCompetitors();
+        const updatedCompetitor = updatedCompetitors.find(c => c.name === competitor.name);
+        console.log(`📊 AFTER DELETE:`, updatedCompetitor?.weighIns);
+
         onUpdate();
         alert('Weigh-in deleted successfully! Changes saved.');
       } catch (error) {
@@ -262,8 +279,15 @@ const CompetitorEditor: React.FC<CompetitorEditorProps> = ({ competitor, onUpdat
             {competitor.weighIns
               .slice() // Create a copy to avoid mutating original
               .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()) // Sort newest first
-              .map((weighIn, index) => (
-                <div key={`${weighIn.date}-${index}`} style={{
+              .map((weighIn, index) => {
+                // Debug: Check for potential duplicate dates
+                const duplicates = competitor.weighIns.filter(w => w.date === weighIn.date);
+                if (duplicates.length > 1) {
+                  console.log(`⚠️ DUPLICATE DATES FOUND for ${weighIn.date}:`, duplicates);
+                }
+
+                return (
+                <div key={`${competitor.name}-${weighIn.date}-${weighIn.weight}-${index}`} style={{
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'space-between',
@@ -354,7 +378,7 @@ const CompetitorEditor: React.FC<CompetitorEditorProps> = ({ competitor, onUpdat
                           ✏️
                         </button>
                         <button
-                          onClick={() => handleDeleteWeighIn(weighIn.date)}
+                          onClick={() => handleDeleteWeighIn(weighIn.date, weighIn.weight)}
                           style={{
                             padding: '4px 8px',
                             background: '#dc3545',
@@ -371,7 +395,8 @@ const CompetitorEditor: React.FC<CompetitorEditorProps> = ({ competitor, onUpdat
                     </>
                   )}
                 </div>
-              ))}
+                );
+              })}
             {competitor.weighIns.length === 0 && (
               <div style={{ textAlign: 'center', color: '#666', padding: '20px' }}>
                 No weigh-in records found

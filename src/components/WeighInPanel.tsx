@@ -146,7 +146,6 @@ const WeighInPanel: React.FC<WeighInPanelProps> = ({ competitors, onAddWeighIn, 
       </form>
 
       {selectedCompetitor && (() => {
-        console.log('🖼️ Rendering profile upload for:', selectedCompetitor);
         return true;
       })() && (
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '30px', marginTop: '40px' }}>
@@ -211,9 +210,9 @@ const WeighInPanel: React.FC<WeighInPanelProps> = ({ competitors, onAddWeighIn, 
           👥 Manage Competitors
         </h3>
         <div style={{ maxHeight: '400px', overflowY: 'auto' }}>
-          {competitors.map(competitor => (
+          {competitors.map((competitor, index) => (
             <CompetitorEditor
-              key={competitor.name}
+              key={`${competitor.name}-${index}-${competitor.weighIns.length}`}
               competitor={competitor}
               onUpdate={() => onDataChange?.()}
             />

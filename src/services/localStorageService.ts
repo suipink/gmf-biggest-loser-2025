@@ -215,11 +215,33 @@ export class LocalStorageService {
   }
 
   // Delete a specific weigh-in
-  static deleteWeighIn(competitorName: string, date: string): void {
+  static deleteWeighIn(competitorName: string, date: string, weight?: number): void {
     const competitors = this.getAllCompetitors();
     const updatedCompetitors = competitors.map(competitor => {
       if (competitor.name === competitorName) {
-        const updatedWeighIns = competitor.weighIns.filter(weighIn => weighIn.date !== date);
+        let updatedWeighIns;
+
+        if (weight !== undefined) {
+          // If weight is provided, delete the specific entry with matching date AND weight
+          let deleted = false;
+          updatedWeighIns = competitor.weighIns.filter(weighIn => {
+            if (!deleted && weighIn.date === date && weighIn.weight === weight) {
+              deleted = true;
+              return false; // Delete this specific entry
+            }
+            return true; // Keep all other entries
+          });
+        } else {
+          // Fallback: delete only the first entry with matching date
+          let deleted = false;
+          updatedWeighIns = competitor.weighIns.filter(weighIn => {
+            if (!deleted && weighIn.date === date) {
+              deleted = true;
+              return false; // Delete only the first match
+            }
+            return true; // Keep all other entries
+          });
+        }
 
         // Sort by date and update current weight to latest
         const sortedWeighIns = updatedWeighIns.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());

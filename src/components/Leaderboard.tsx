@@ -29,6 +29,17 @@ const Leaderboard: React.FC<LeaderboardProps> = ({
 }) => {
   const rankings = computeRankings(entries, mode);
 
+  // Ensure cards are sorted by rank for display (rank 1, 2, 3, etc.)
+  const sortedRankings = [...rankings].sort((a, b) => {
+    // Put entries with insufficient data at the end
+    if (a.hasInsufficientData && !b.hasInsufficientData) return 1;
+    if (!a.hasInsufficientData && b.hasInsufficientData) return -1;
+    if (a.hasInsufficientData && b.hasInsufficientData) return a.name.localeCompare(b.name);
+
+    // Sort by rank (1, 2, 3, etc.)
+    return a.rank - b.rank;
+  });
+
   const getRankClass = (rank: number, hasInsufficientData: boolean) => {
     if (hasInsufficientData || rank === -1) return 'rank-n';
     return `rank-${rank}`;
@@ -42,7 +53,7 @@ const Leaderboard: React.FC<LeaderboardProps> = ({
 
   return (
     <>
-      {rankings.map((ranking) => (
+      {sortedRankings.map((ranking) => (
         <div
           key={ranking.name}
           className={`card ${getRankClass(ranking.rank, ranking.hasInsufficientData || false)}`}
@@ -94,11 +105,19 @@ const Leaderboard: React.FC<LeaderboardProps> = ({
                   }) : 'ไม่มีข้อมูล';
                 })()}
               </div>
-              <div style={{ whiteSpace: 'nowrap' }}>
+              <div style={{ whiteSpace: 'nowrap', width: '100%' }}>
                 {ranking.hasInsufficientData ? (
-                  <span className={`weight ${blurPercentages ? 'is-hidden' : ''}`}>N/A</span>
+                  <span className={`weight ${blurPercentages ? 'is-hidden' : ''}`} style={{ fontSize: 'clamp(1.1rem, 2.2vw, 1.6rem)' }}>N/A</span>
                 ) : (
-                  <span className={`weight ${blurPercentages ? 'is-hidden' : ''}`} style={{ fontSize: '0.9em' }}>
+                  <span
+                    className={`weight ${blurPercentages ? 'is-hidden' : ''}`}
+                    style={{
+                      fontSize: 'clamp(1.1rem, 2.2vw, 1.6rem)',
+                      display: 'block',
+                      lineHeight: '1.2',
+                      color: ranking.percentLoss > 0 ? '#22c55e' : '#ef4444'
+                    }}
+                  >
                     {ranking.percentLoss > 0 ? '↓' : '↑'} {formatPercentage(Math.abs(ranking.percentLoss))}
                     {Math.abs(ranking.kgLoss) > 0 && (
                       <span style={{ fontWeight: 'bold', marginLeft: '4px' }}>
