@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import Leaderboard from './components/Leaderboard';
 import WeighInPanel from './components/WeighInPanel';
 import { CompetitorEntry } from './utils/logic';

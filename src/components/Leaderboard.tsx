@@ -1,6 +1,6 @@
 import React from 'react';
-import { computeRankings, CompetitorEntry, RankingResult } from '../utils/logic';
-import { rankToBadge, formatPercentage } from '../utils/format';
+import { computeRankings, CompetitorEntry } from '../utils/logic';
+import { formatPercentage } from '../utils/format';
 
 interface LeaderboardProps {
   entries: CompetitorEntry[];
@@ -24,7 +24,7 @@ const getEmojiForRank = (rank: number): string => {
 const Leaderboard: React.FC<LeaderboardProps> = ({
   entries,
   mode,
-  showWeights = false,
+  showWeights: _showWeights = false,
   blurPercentages = false
 }) => {
   const rankings = computeRankings(entries, mode);

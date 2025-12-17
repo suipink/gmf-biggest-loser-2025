@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { LocalStorageService } from '../services/localStorageService';
 import { CompetitorEntry } from '../utils/logic';
-import LocalProfilePictureUpload from './LocalProfilePictureUpload';
 
 interface CompetitorEditorProps {
   competitor: CompetitorEntry;
@@ -237,7 +236,7 @@ const CompetitorEditor: React.FC<CompetitorEditorProps> = ({ competitor, onUpdat
                 onUpdate();
               } catch (error) {
                 console.error('❌ Upload failed:', error);
-                alert(`Failed to upload profile picture: ${error.message}`);
+                alert(`Failed to upload profile picture: ${error instanceof Error ? error.message : String(error)}`);
               }
             }}
             style={{

@@ -1,4 +1,4 @@
-import { CompetitorEntry, WeighIn } from '../utils/logic';
+import { CompetitorEntry } from '../utils/logic';
 
 const STORAGE_KEYS = {
   COMPETITORS: 'gmf_competitors',
