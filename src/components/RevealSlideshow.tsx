@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { computeRankings, CompetitorEntry } from '../utils/logic';
 import { formatPercentage } from '../utils/format';
 
@@ -19,22 +19,27 @@ const getEmojiForRank = (rank: number): string => {
   }
 };
 
-const getCheererBadgeContent = (cheerer: string) => {
+const getCheererBadgeContent = (cheerer: string): string => {
   const emojiMatch = cheerer.match(/[\u{1F600}-\u{1F64F}]|[\u{1F300}-\u{1F5FF}]|[\u{1F680}-\u{1F6FF}]|[\u{1F1E0}-\u{1F1FF}]|[\u{2600}-\u{26FF}]|[\u{2700}-\u{27BF}]|[\u{1F900}-\u{1F9FF}]|[\u{1F018}-\u{1F270}]|[\u{238C}]|[\u{2194}-\u{2199}]|[\u{21A9}-\u{21AA}]|[\u{231A}-\u{231B}]|[\u{23E9}-\u{23EC}]|[\u{23F0}]|[\u{23F3}]|[\u{25FD}-\u{25FE}]|[\u{2614}-\u{2615}]|[\u{2648}-\u{2653}]|[\u{267F}]|[\u{2693}]|[\u{26A1}]|[\u{26AA}-\u{26AB}]|[\u{26BD}-\u{26BE}]|[\u{26C4}-\u{26C5}]|[\u{26CE}]|[\u{26D4}]|[\u{26EA}]|[\u{26F2}-\u{26F3}]|[\u{26F5}]|[\u{26FA}]|[\u{26FD}]|[\u{2705}]|[\u{270A}-\u{270B}]|[\u{2728}]|[\u{274C}]|[\u{274E}]|[\u{2753}-\u{2755}]|[\u{2757}]|[\u{2795}-\u{2797}]|[\u{27B0}]|[\u{27BF}]|[\u{2B1B}-\u{2B1C}]|[\u{2B50}]|[\u{2B55}]/gu);
   return emojiMatch ? emojiMatch[0] : '⭐';
 };
 
-const getRankClass = (rank: number) => {
-  return `rank-${rank}`;
+const getRankClass = (rank: number): string => `rank-${rank}`;
+
+const getRankSuffix = (rank: number): string => {
+  if (rank === 1) return 'st';
+  if (rank === 2) return 'nd';
+  if (rank === 3) return 'rd';
+  return 'th';
 };
 
 const RevealSlideshow: React.FC<RevealSlideshowProps> = ({ entries, mode }) => {
-  const rankings = computeRankings(entries, mode);
-
-  // Sort rankings from 6th to 1st (reverse order)
-  const sortedRankings = [...rankings]
-    .filter(r => !r.hasInsufficientData && r.rank > 0)
-    .sort((a, b) => b.rank - a.rank);
+  const sortedRankings = useMemo(() => {
+    const rankings = computeRankings(entries, mode);
+    return [...rankings]
+      .filter(r => !r.hasInsufficientData && r.rank > 0)
+      .sort((a, b) => b.rank - a.rank);
+  }, [entries, mode]);
 
   const [hasStarted, setHasStarted] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -53,7 +58,7 @@ const RevealSlideshow: React.FC<RevealSlideshowProps> = ({ entries, mode }) => {
     return () => clearTimeout(timer);
   }, [currentIndex]);
 
-  const handleNext = () => {
+  const handleNext = useCallback(() => {
     if (currentIndex < sortedRankings.length - 1 && !isAnimating) {
       setIsAnimating(true);
       setShowReveal(false);
@@ -66,9 +71,9 @@ const RevealSlideshow: React.FC<RevealSlideshowProps> = ({ entries, mode }) => {
         setIsAnimating(false);
       }, 800);
     }
-  };
+  }, [currentIndex, sortedRankings.length, isAnimating]);
 
-  const handlePrevious = () => {
+  const handlePrevious = useCallback(() => {
     if (currentIndex > 0 && !isAnimating) {
       setIsAnimating(true);
       setShowReveal(false);
@@ -81,7 +86,7 @@ const RevealSlideshow: React.FC<RevealSlideshowProps> = ({ entries, mode }) => {
         setIsAnimating(false);
       }, 800);
     }
-  };
+  }, [currentIndex, isAnimating]);
 
   if (!currentRanking) {
     return (
@@ -250,12 +255,5 @@ const RevealSlideshow: React.FC<RevealSlideshowProps> = ({ entries, mode }) => {
     </div>
   );
 };
-
-function getRankSuffix(rank: number): string {
-  if (rank === 1) return 'st';
-  if (rank === 2) return 'nd';
-  if (rank === 3) return 'rd';
-  return 'th';
-}
 
 export default RevealSlideshow;

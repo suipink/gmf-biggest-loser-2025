@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { computeRankings, CompetitorEntry } from '../utils/logic';
 import { formatPercentage } from '../utils/format';
 
@@ -27,18 +27,20 @@ const Leaderboard: React.FC<LeaderboardProps> = ({
   showWeights: _showWeights = false,
   blurPercentages = false
 }) => {
-  const rankings = computeRankings(entries, mode);
+  const sortedRankings = useMemo(() => {
+    const rankings = computeRankings(entries, mode);
 
-  // Ensure cards are sorted by rank for display (rank 1, 2, 3, etc.)
-  const sortedRankings = [...rankings].sort((a, b) => {
-    // Put entries with insufficient data at the end
-    if (a.hasInsufficientData && !b.hasInsufficientData) return 1;
-    if (!a.hasInsufficientData && b.hasInsufficientData) return -1;
-    if (a.hasInsufficientData && b.hasInsufficientData) return a.name.localeCompare(b.name);
+    // Ensure cards are sorted by rank for display (rank 1, 2, 3, etc.)
+    return [...rankings].sort((a, b) => {
+      // Put entries with insufficient data at the end
+      if (a.hasInsufficientData && !b.hasInsufficientData) return 1;
+      if (!a.hasInsufficientData && b.hasInsufficientData) return -1;
+      if (a.hasInsufficientData && b.hasInsufficientData) return a.name.localeCompare(b.name);
 
-    // Sort by rank (1, 2, 3, etc.)
-    return a.rank - b.rank;
-  });
+      // Sort by rank (1, 2, 3, etc.)
+      return a.rank - b.rank;
+    });
+  }, [entries, mode]);
 
   const getRankClass = (rank: number, hasInsufficientData: boolean) => {
     if (hasInsufficientData || rank === -1) return 'rank-n';

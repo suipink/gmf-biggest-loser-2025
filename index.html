@@ -9,6 +9,11 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Preload critical images for better performance -->
+  <link rel="preload" as="image" href="/GMF Circle Black.png">
+  <link rel="preload" as="image" href="/images/Kan Original.jpg">
+  <link rel="preload" as="image" href="/images/Kan after.jpg">
   <style>
 /* ===========================
    GMF BIGGEST LOSER 2025 THEME
@@ -492,6 +497,7 @@ body:before{
   transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
   position: relative;
   max-width: 96%;
+  will-change: opacity, transform;
   width: 100%;
   display: flex;
   gap: 40px;
@@ -559,10 +565,12 @@ body:before{
 .photo-before {
   animation: photoCardFlip 2.0s cubic-bezier(0.23, 1, 0.32, 1) 0.4s forwards;
   transform-style: preserve-3d;
+  will-change: transform, opacity;
 }
 
 .photo-after {
   animation: photoRevealFade 1.2s cubic-bezier(0.23, 1, 0.32, 1) 2.5s forwards;
+  will-change: opacity, transform;
 }
 
 @keyframes photoCardFlip {
