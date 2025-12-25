@@ -86,20 +86,19 @@ function App() {
 
   return (
     <>
-      <section className="hero">
-        <h1 className="title">
+      <section className="hero" style={{ minHeight: '12vh', padding: '1rem 0.7rem' }}>
+        <h1 className="title" style={{ fontSize: 'clamp(40px, 6vw, 70px)', margin: '0', gap: '10px' }}>
           <img
             src="GMF Circle Black.png"
             alt="GMF Logo"
             style={{
-              height: 'clamp(80px, 12vw, 180px)',
+              height: 'clamp(50px, 7vw, 90px)',
               width: 'auto',
               objectFit: 'contain'
             }}
           />
           GMF BIGGEST LOSER 2025
         </h1>
-        <span className="belt" aria-hidden="true"></span>
       </section>
 
       <section style={{ minHeight: '80vh' }}>
