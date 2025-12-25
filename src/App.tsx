@@ -86,13 +86,13 @@ function App() {
 
   return (
     <>
-      <section className="hero" style={{ minHeight: '9vh', padding: '1.2rem 0.7rem 0.6rem', marginBottom: '0' }}>
-        <h1 className="title" style={{ fontSize: 'clamp(45px, 6.5vw, 75px)', margin: '0', gap: '10px' }}>
+      <section className="hero" style={{ minHeight: '11vh', padding: '1.6rem 0.7rem 0.8rem', marginBottom: '0' }}>
+        <h1 className="title" style={{ fontSize: 'clamp(52px, 7.5vw, 85px)', margin: '0', gap: '12px' }}>
           <img
             src="/GMF Circle Black.png"
             alt="GMF Logo"
             style={{
-              height: 'clamp(55px, 7.5vw, 90px)',
+              height: 'clamp(62px, 8.5vw, 100px)',
               width: 'auto',
               objectFit: 'contain'
             }}
