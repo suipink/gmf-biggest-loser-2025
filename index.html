@@ -557,11 +557,26 @@ body:before{
 }
 
 .photo-before {
-  animation: photoRevealFade 1.2s cubic-bezier(0.23, 1, 0.32, 1) 0.4s forwards;
+  animation: photoCardFlip 1.5s cubic-bezier(0.23, 1, 0.32, 1) 0.4s forwards;
+  transform-style: preserve-3d;
 }
 
 .photo-after {
   animation: photoRevealFade 1.2s cubic-bezier(0.23, 1, 0.32, 1) 2.5s forwards;
+}
+
+@keyframes photoCardFlip {
+  0% {
+    opacity: 1;
+    transform: perspective(1000px) rotateY(90deg) scale(0.95);
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 1;
+    transform: perspective(1000px) rotateY(0deg) scale(1);
+  }
 }
 
 @keyframes photoRevealFade {
@@ -590,8 +605,9 @@ body:before{
   border-radius: 20px;
   box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
   transition: transform 0.3s ease;
-  background: #1a1a1a;
+  background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%);
   display: block;
+  backface-visibility: hidden;
 }
 
 .scorecard-photo-large:hover {
