@@ -119,26 +119,28 @@ const RevealSlideshow: React.FC<RevealSlideshowProps> = ({ entries, mode }) => {
         {/* Left Side: Before/After Photos - Side by Side */}
         <div className="scorecard-left">
           <div className="photo-comparison-horizontal">
-            <div className="photo-item-large">
+            <div className="photo-item-large photo-before">
               <div className="photo-label-large">BEFORE</div>
               <img
                 key={`before-${currentRanking.name}`}
                 src={currentRanking.beforePhoto || currentRanking.profilePic}
                 alt={`${currentRanking.name} before`}
                 className="scorecard-photo-large"
+                loading="eager"
               />
               <div className="weight-label-large">{currentRanking.weighIns[0]?.weight.toFixed(1)} kg</div>
             </div>
 
             <div className="arrow-horizontal">→</div>
 
-            <div className="photo-item-large">
+            <div className="photo-item-large photo-after">
               <div className="photo-label-large">AFTER</div>
               <img
                 key={`after-${currentRanking.name}`}
                 src={currentRanking.afterPhoto || currentRanking.profilePic}
                 alt={`${currentRanking.name} after`}
                 className="scorecard-photo-large"
+                loading="eager"
               />
               <div className="weight-label-large">{currentRanking.weighIns[currentRanking.weighIns.length - 1]?.weight.toFixed(1)} kg</div>
             </div>

@@ -554,15 +554,14 @@ body:before{
   align-items: center;
   gap: 12px;
   opacity: 0;
-  animation: photoRevealFade 1.2s cubic-bezier(0.23, 1, 0.32, 1) forwards;
 }
 
-.photo-item-large:first-child {
-  animation-delay: 0.3s;
+.photo-before {
+  animation: photoRevealFade 1.2s cubic-bezier(0.23, 1, 0.32, 1) 0.4s forwards;
 }
 
-.photo-item-large:last-child {
-  animation-delay: 0.8s;
+.photo-after {
+  animation: photoRevealFade 1.2s cubic-bezier(0.23, 1, 0.32, 1) 1.2s forwards;
 }
 
 @keyframes photoRevealFade {
@@ -591,6 +590,8 @@ body:before{
   border-radius: 20px;
   box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
   transition: transform 0.3s ease;
+  background: #1a1a1a;
+  display: block;
 }
 
 .scorecard-photo-large:hover {
@@ -609,7 +610,7 @@ body:before{
   color: var(--accent);
   font-weight: 800;
   opacity: 0;
-  animation: gameRevealArrowFluid 1.0s cubic-bezier(0.23, 1, 0.32, 1) 0.5s forwards,
+  animation: gameRevealArrowFluid 1.0s cubic-bezier(0.23, 1, 0.32, 1) 0.8s forwards,
              arrowPulse 2s ease-in-out 2.5s infinite;
   margin: 0 10px;
 }
