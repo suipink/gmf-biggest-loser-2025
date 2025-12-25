@@ -133,7 +133,6 @@ const RevealSlideshow: React.FC<RevealSlideshowProps> = ({ entries, mode }) => {
                 className="scorecard-photo-large"
                 loading="eager"
               />
-              <div className="weight-label-large">{currentRanking.weighIns[0]?.weight.toFixed(1)} kg</div>
             </div>
 
             <div className="arrow-horizontal">→</div>
@@ -147,7 +146,6 @@ const RevealSlideshow: React.FC<RevealSlideshowProps> = ({ entries, mode }) => {
                 className="scorecard-photo-large"
                 loading="eager"
               />
-              <div className="weight-label-large">{currentRanking.weighIns[currentRanking.weighIns.length - 1]?.weight.toFixed(1)} kg</div>
             </div>
           </div>
         </div>
