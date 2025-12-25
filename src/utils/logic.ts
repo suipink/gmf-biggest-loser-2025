@@ -8,6 +8,8 @@ export interface CompetitorEntry {
   baselineWeight: number;
   currentWeight: number;
   profilePic: string;
+  beforePhoto?: string;
+  afterPhoto?: string;
   cheerer: string;
   weighIns: WeighIn[];
   percentLoss?: number;
@@ -21,6 +23,8 @@ export interface RankingResult {
   rank: number;
   isTied: boolean;
   profilePic: string;
+  beforePhoto?: string;
+  afterPhoto?: string;
   cheerer: string;
   weighIns: WeighIn[];
   weightChangePercent?: number;
@@ -88,6 +92,8 @@ export function computeRankings(entries: CompetitorEntry[], mode: "preFinal" | "
       percentLoss: hasInsufficientData ? -1 : percentLoss,
       kgLoss: hasInsufficientData ? -1 : kgLoss,
       profilePic: entry.profilePic,
+      beforePhoto: entry.beforePhoto,
+      afterPhoto: entry.afterPhoto,
       cheerer: entry.cheerer,
       weighIns: entry.weighIns,
       weightChangePercent,

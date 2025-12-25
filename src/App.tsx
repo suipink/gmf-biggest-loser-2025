@@ -1,86 +1,87 @@
 import { useState, useEffect } from 'react';
 import Leaderboard from './components/Leaderboard';
+import RevealSlideshow from './components/RevealSlideshow';
 import WeighInPanel from './components/WeighInPanel';
 import { CompetitorEntry } from './utils/logic';
 import { LocalStorageService } from './services/localStorageService';
 
 const competitorData: CompetitorEntry[] = [
   {
-    name: "Sarah Chen",
-    baselineWeight: 85,
-    currentWeight: 78.03,
-    profilePic: "https://images.unsplash.com/photo-1494790108755-2616b2e8a5cd?w=200&h=200&fit=crop&crop=face",
-    cheerer: "Team Thunder ⚡",
+    name: "Benz",
+    baselineWeight: 85,  // UPDATE: Replace with actual first weigh-in weight
+    currentWeight: 78.03,  // UPDATE: Replace with actual last weigh-in weight
+    profilePic: "/images/Benz after.jpg",
+    beforePhoto: "/images/Benz Original.jpg",
+    afterPhoto: "/images/Benz after.jpg",
+    cheerer: "Team Thunder ⚡",  // UPDATE: Replace with actual team/cheerer name
     weighIns: [
-      { date: "2025-01-01", weight: 85 },
-      { date: "2025-01-15", weight: 82.5 },
-      { date: "2025-02-01", weight: 80.2 },
-      { date: "2025-02-15", weight: 78.03 }
+      { date: "2025-01-01", weight: 85 },  // UPDATE: Replace with actual first weigh-in
+      { date: "2025-02-15", weight: 78.03 }  // UPDATE: Replace with actual last weigh-in
     ]
   },
   {
-    name: "Mike Rodriguez",
-    baselineWeight: 120,
-    currentWeight: 108.5,
-    profilePic: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&h=200&fit=crop&crop=face",
-    cheerer: "Fitness Warriors 🏋️‍♂️",
+    name: "Kan",
+    baselineWeight: 120,  // UPDATE: Replace with actual first weigh-in weight
+    currentWeight: 108.5,  // UPDATE: Replace with actual last weigh-in weight
+    profilePic: "/images/Kan after.jpg",
+    beforePhoto: "/images/Kan Original.jpg",
+    afterPhoto: "/images/Kan after.jpg",
+    cheerer: "Fitness Warriors 🏋️‍♂️",  // UPDATE: Replace with actual team/cheerer name
     weighIns: [
-      { date: "2025-01-01", weight: 120 },
-      { date: "2025-01-15", weight: 116.8 },
-      { date: "2025-02-01", weight: 112.3 },
-      { date: "2025-02-15", weight: 108.5 }
+      { date: "2025-01-01", weight: 120 },  // UPDATE: Replace with actual first weigh-in
+      { date: "2025-02-15", weight: 108.5 }  // UPDATE: Replace with actual last weigh-in
     ]
   },
   {
-    name: "Emma Johnson",
-    baselineWeight: 95,
-    currentWeight: 87.2,
-    profilePic: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=200&h=200&fit=crop&crop=face",
-    cheerer: "Dream Team 💫",
+    name: "Khwan",
+    baselineWeight: 95,  // UPDATE: Replace with actual first weigh-in weight
+    currentWeight: 87.2,  // UPDATE: Replace with actual last weigh-in weight
+    profilePic: "/images/Khwan after.jpg",
+    beforePhoto: "/images/Khwan Original.jpg",
+    afterPhoto: "/images/Khwan after.jpg",
+    cheerer: "Dream Team 💫",  // UPDATE: Replace with actual team/cheerer name
     weighIns: [
-      { date: "2025-01-01", weight: 95 },
-      { date: "2025-01-15", weight: 92.1 },
-      { date: "2025-02-01", weight: 89.5 },
-      { date: "2025-02-15", weight: 87.2 }
+      { date: "2025-01-01", weight: 95 },  // UPDATE: Replace with actual first weigh-in
+      { date: "2025-02-15", weight: 87.2 }  // UPDATE: Replace with actual last weigh-in
     ]
   },
   {
-    name: "David Kim",
-    baselineWeight: 110,
-    currentWeight: 101.5,
-    profilePic: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200&h=200&fit=crop&crop=face",
-    cheerer: "Iron Eagles 🦅",
+    name: "Maprang",
+    baselineWeight: 110,  // UPDATE: Replace with actual first weigh-in weight
+    currentWeight: 101.5,  // UPDATE: Replace with actual last weigh-in weight
+    profilePic: "/images/Maprang after.jpg",
+    beforePhoto: "/images/Maprang Original.jpg",
+    afterPhoto: "/images/Maprang after.jpg",
+    cheerer: "Iron Eagles 🦅",  // UPDATE: Replace with actual team/cheerer name
     weighIns: [
-      { date: "2025-01-01", weight: 110 },
-      { date: "2025-01-15", weight: 107.2 },
-      { date: "2025-02-01", weight: 104.8 },
-      { date: "2025-02-15", weight: 101.5 }
+      { date: "2025-01-01", weight: 110 },  // UPDATE: Replace with actual first weigh-in
+      { date: "2025-02-15", weight: 101.5 }  // UPDATE: Replace with actual last weigh-in
     ]
   },
   {
-    name: "Lisa Thompson",
-    baselineWeight: 90,
-    currentWeight: 83.7,
-    profilePic: "https://images.unsplash.com/photo-1489424731084-a5d8b219a5bb?w=200&h=200&fit=crop&crop=face",
-    cheerer: "Phoenix Rising 🔥",
+    name: "Mera",
+    baselineWeight: 90,  // UPDATE: Replace with actual first weigh-in weight
+    currentWeight: 83.7,  // UPDATE: Replace with actual last weigh-in weight
+    profilePic: "/images/Mera after.jpg",
+    beforePhoto: "/images/Mera Original.jpg",
+    afterPhoto: "/images/Mera after.jpg",
+    cheerer: "Phoenix Rising 🔥",  // UPDATE: Replace with actual team/cheerer name
     weighIns: [
-      { date: "2025-01-01", weight: 90 },
-      { date: "2025-01-15", weight: 87.8 },
-      { date: "2025-02-01", weight: 85.9 },
-      { date: "2025-02-15", weight: 83.7 }
+      { date: "2025-01-01", weight: 90 },  // UPDATE: Replace with actual first weigh-in
+      { date: "2025-02-15", weight: 83.7 }  // UPDATE: Replace with actual last weigh-in
     ]
   },
   {
-    name: "Alex Martinez",
-    baselineWeight: 105,
-    currentWeight: 98.8,
-    profilePic: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200&h=200&fit=crop&crop=face",
-    cheerer: "Victory Wolves 🐺",
+    name: "Sui",
+    baselineWeight: 105,  // UPDATE: Replace with actual first weigh-in weight
+    currentWeight: 98.8,  // UPDATE: Replace with actual last weigh-in weight
+    profilePic: "/images/Sui After.jpg",
+    beforePhoto: "/images/Sui Original.jpg",
+    afterPhoto: "/images/Sui After.jpg",
+    cheerer: "Victory Wolves 🐺",  // UPDATE: Replace with actual team/cheerer name
     weighIns: [
-      { date: "2025-01-01", weight: 105 },
-      { date: "2025-01-15", weight: 103.2 },
-      { date: "2025-02-01", weight: 101.1 },
-      { date: "2025-02-15", weight: 98.8 }
+      { date: "2025-01-01", weight: 105 },  // UPDATE: Replace with actual first weigh-in
+      { date: "2025-02-15", weight: 98.8 }  // UPDATE: Replace with actual last weigh-in
     ]
   }
 ];
@@ -89,6 +90,7 @@ function App() {
   const [competitors, setCompetitors] = useState<CompetitorEntry[]>(competitorData);
   const [showAdmin, setShowAdmin] = useState(false);
   const [blurPercentages, setBlurPercentages] = useState(false);
+  const [revealMode, setRevealMode] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -188,13 +190,25 @@ function App() {
           </button>
 
           {!showAdmin && (
-            <button
-              className="reveal-btn"
-              onClick={() => setBlurPercentages(!blurPercentages)}
-              title={blurPercentages ? 'Reveal Percentages' : 'Blur for Screenshot'}
-            >
-              {blurPercentages ? '👁️ Reveal' : '🫣 Hide'}
-            </button>
+            <>
+              <button
+                className="reveal-btn"
+                onClick={() => setRevealMode(!revealMode)}
+                title={revealMode ? 'Show All Rankings' : 'Reveal Mode (6th to 1st)'}
+              >
+                {revealMode ? '📊 Leaderboard' : '🎬 Reveal Show'}
+              </button>
+
+              {!revealMode && (
+                <button
+                  className="reveal-btn"
+                  onClick={() => setBlurPercentages(!blurPercentages)}
+                  title={blurPercentages ? 'Reveal Percentages' : 'Blur for Screenshot'}
+                >
+                  {blurPercentages ? '👁️ Reveal' : '🫣 Hide'}
+                </button>
+              )}
+            </>
           )}
         </div>
       </section>
@@ -233,6 +247,13 @@ function App() {
             competitors={competitors}
             onAddWeighIn={addWeighIn}
             onDataChange={loadCompetitors}
+          />
+        </section>
+      ) : revealMode ? (
+        <section style={{ minHeight: '80vh' }}>
+          <RevealSlideshow
+            entries={competitors}
+            mode="preFinal"
           />
         </section>
       ) : (
