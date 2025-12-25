@@ -90,29 +90,29 @@ const RevealSlideshow: React.FC<RevealSlideshowProps> = ({ entries, mode }) => {
       {/* Main Reveal Card - Horizontal Scorecard Layout */}
       <div className={`reveal-card ${showReveal ? 'show' : ''} ${getRankClass(currentRanking.rank)} ${isTopThree ? 'top-three-card' : ''}`}>
 
-        {/* Left Side: Before/After Photos */}
+        {/* Left Side: Before/After Photos - Side by Side */}
         <div className="scorecard-left">
-          <div className="photo-comparison">
-            <div className="photo-item">
-              <div className="photo-label-small">BEFORE</div>
+          <div className="photo-comparison-horizontal">
+            <div className="photo-item-large">
+              <div className="photo-label-large">BEFORE</div>
               <img
                 src={currentRanking.beforePhoto || currentRanking.profilePic}
                 alt={`${currentRanking.name} before`}
-                className="scorecard-photo"
+                className="scorecard-photo-large"
               />
-              <div className="weight-label-small">{currentRanking.weighIns[0]?.weight.toFixed(1)} kg</div>
+              <div className="weight-label-large">{currentRanking.weighIns[0]?.weight.toFixed(1)} kg</div>
             </div>
 
-            <div className="arrow-vertical">↓</div>
+            <div className="arrow-horizontal">→</div>
 
-            <div className="photo-item">
-              <div className="photo-label-small">AFTER</div>
+            <div className="photo-item-large">
+              <div className="photo-label-large">AFTER</div>
               <img
                 src={currentRanking.afterPhoto || currentRanking.profilePic}
                 alt={`${currentRanking.name} after`}
-                className="scorecard-photo"
+                className="scorecard-photo-large"
               />
-              <div className="weight-label-small">{currentRanking.weighIns[currentRanking.weighIns.length - 1]?.weight.toFixed(1)} kg</div>
+              <div className="weight-label-large">{currentRanking.weighIns[currentRanking.weighIns.length - 1]?.weight.toFixed(1)} kg</div>
             </div>
           </div>
         </div>
