@@ -9,7 +9,7 @@ const competitorData: CompetitorEntry[] = [
     profilePic: "/images/Kan after.jpg",
     beforePhoto: "/images/Kan Original.jpg",
     afterPhoto: "/images/Kan after.jpg",
-    cheerer: "Team Champion 🏆",  // UPDATE: Replace with actual team/cheerer name
+    cheerer: "กองเชียร์: Kate",
     weighIns: [
       { date: "2025-01-01", weight: 76.00 },
       { date: "2025-02-15", weight: 68.90 }
@@ -22,7 +22,7 @@ const competitorData: CompetitorEntry[] = [
     profilePic: "/images/Mera after.jpg",
     beforePhoto: "/images/Mera Original.jpg",
     afterPhoto: "/images/Mera after.jpg",
-    cheerer: "Phoenix Rising 🔥",  // UPDATE: Replace with actual team/cheerer name
+    cheerer: "กองเชียร์: James",
     weighIns: [
       { date: "2025-01-01", weight: 77.60 },
       { date: "2025-02-15", weight: 70.90 }
@@ -35,7 +35,7 @@ const competitorData: CompetitorEntry[] = [
     profilePic: "/images/Khwan after.jpg",
     beforePhoto: "/images/Khwan Original.jpg",
     afterPhoto: "/images/Khwan after.jpg",
-    cheerer: "Dream Team 💫",  // UPDATE: Replace with actual team/cheerer name
+    cheerer: "กองเชียร์: Mint",
     weighIns: [
       { date: "2025-01-01", weight: 79.90 },
       { date: "2025-02-15", weight: 76.00 }
@@ -48,7 +48,7 @@ const competitorData: CompetitorEntry[] = [
     profilePic: "/images/Sui After.jpg",
     beforePhoto: "/images/Sui Original.jpg",
     afterPhoto: "/images/Sui After.jpg",
-    cheerer: "Victory Wolves 🐺",  // UPDATE: Replace with actual team/cheerer name
+    cheerer: "กองเชียร์: -",
     weighIns: [
       { date: "2025-01-01", weight: 80.80 },
       { date: "2025-02-15", weight: 77.50 }
@@ -61,7 +61,7 @@ const competitorData: CompetitorEntry[] = [
     profilePic: "/images/Benz after.jpg",
     beforePhoto: "/images/Benz Original.jpg",
     afterPhoto: "/images/Benz after.jpg",
-    cheerer: "Team Thunder ⚡",  // UPDATE: Replace with actual team/cheerer name
+    cheerer: "กองเชียร์: Pink",
     weighIns: [
       { date: "2025-01-01", weight: 79.80 },
       { date: "2025-02-15", weight: 79.00 }
@@ -74,7 +74,7 @@ const competitorData: CompetitorEntry[] = [
     profilePic: "/images/Maprang after.jpg",
     beforePhoto: "/images/Maprang Original.jpg",
     afterPhoto: "/images/Maprang after.jpg",
-    cheerer: "Iron Eagles 🦅",  // UPDATE: Replace with actual team/cheerer name
+    cheerer: "กองเชียร์: Jik",
     weighIns: [
       { date: "2025-01-01", weight: 80.30 },
       { date: "2025-02-15", weight: 81.50 }
