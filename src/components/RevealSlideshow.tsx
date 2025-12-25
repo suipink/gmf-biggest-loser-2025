@@ -142,15 +142,15 @@ const RevealSlideshow: React.FC<RevealSlideshowProps> = ({ entries, mode }) => {
 
           <div className="stats-container">
             <div className="stat-box">
-              <div className="stat-label">Weight Loss</div>
-              <div className="stat-value" style={{ color: '#22c55e' }}>
+              <div className="stat-label">{currentRanking.percentLoss >= 0 ? 'Weight Loss' : 'Weight Gain'}</div>
+              <div className="stat-value" style={{ color: currentRanking.percentLoss >= 0 ? '#22c55e' : '#ef4444' }}>
                 {formatPercentage(Math.abs(currentRanking.percentLoss))}
               </div>
             </div>
 
             <div className="stat-box">
-              <div className="stat-label">Total Lost</div>
-              <div className="stat-value" style={{ color: '#22c55e' }}>
+              <div className="stat-label">{currentRanking.kgLoss >= 0 ? 'Total Lost' : 'Total Gain'}</div>
+              <div className="stat-value" style={{ color: currentRanking.kgLoss >= 0 ? '#22c55e' : '#ef4444' }}>
                 {Math.abs(currentRanking.kgLoss).toFixed(1)} kg
               </div>
             </div>
