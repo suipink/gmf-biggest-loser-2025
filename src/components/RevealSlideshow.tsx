@@ -49,7 +49,7 @@ const RevealSlideshow: React.FC<RevealSlideshowProps> = ({ entries, mode }) => {
     // Trigger reveal animation after component mounts
     const timer = setTimeout(() => {
       setShowReveal(true);
-    }, 500);
+    }, 100);
     return () => clearTimeout(timer);
   }, [currentIndex]);
 
@@ -60,8 +60,11 @@ const RevealSlideshow: React.FC<RevealSlideshowProps> = ({ entries, mode }) => {
 
       setTimeout(() => {
         setCurrentIndex(currentIndex + 1);
+      }, 300);
+
+      setTimeout(() => {
         setIsAnimating(false);
-      }, 600);
+      }, 900);
     }
   };
 
@@ -72,8 +75,11 @@ const RevealSlideshow: React.FC<RevealSlideshowProps> = ({ entries, mode }) => {
 
       setTimeout(() => {
         setCurrentIndex(currentIndex - 1);
+      }, 300);
+
+      setTimeout(() => {
         setIsAnimating(false);
-      }, 600);
+      }, 900);
     }
   };
 
