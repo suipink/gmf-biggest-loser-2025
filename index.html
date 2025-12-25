@@ -554,29 +554,25 @@ body:before{
   align-items: center;
   gap: 12px;
   opacity: 0;
-  animation: gameRevealSlide 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  animation: gameRevealSlideFluid 0.8s cubic-bezier(0.23, 1, 0.32, 1) forwards;
 }
 
 .photo-item-large:first-child {
-  animation-delay: 0.3s;
+  animation-delay: 0.2s;
 }
 
 .photo-item-large:last-child {
-  animation-delay: 0.7s;
+  animation-delay: 0.5s;
 }
 
-@keyframes gameRevealSlide {
+@keyframes gameRevealSlideFluid {
   0% {
     opacity: 0;
-    transform: translateX(-100px) scale(0.8) rotate(-5deg);
-  }
-  60% {
-    opacity: 1;
-    transform: translateX(10px) scale(1.05) rotate(2deg);
+    transform: translateX(-60px) scale(0.95);
   }
   100% {
     opacity: 1;
-    transform: translateX(0) scale(1) rotate(0deg);
+    transform: translateX(0) scale(1);
   }
 }
 
@@ -595,6 +591,7 @@ body:before{
   border-radius: 20px;
   box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
   transition: transform 0.3s ease;
+  background: linear-gradient(135deg, #f0f0f0 0%, #e0e0e0 100%);
 }
 
 .scorecard-photo-large:hover {
@@ -613,28 +610,28 @@ body:before{
   color: var(--accent);
   font-weight: 800;
   opacity: 0;
-  animation: gameRevealArrow 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55) 0.5s forwards,
-             arrowPulse 1.5s ease-in-out 1.2s infinite;
+  animation: gameRevealArrowFluid 0.6s cubic-bezier(0.23, 1, 0.32, 1) 0.35s forwards,
+             arrowPulse 1.5s ease-in-out 1.5s infinite;
   margin: 0 10px;
 }
 
-@keyframes gameRevealArrow {
+@keyframes gameRevealArrowFluid {
   0% {
     opacity: 0;
-    transform: translateX(-50px) scale(0.5) rotate(-180deg);
+    transform: scale(0.8);
   }
   100% {
     opacity: 1;
-    transform: translateX(0) scale(1) rotate(0deg);
+    transform: scale(1);
   }
 }
 
 @keyframes arrowPulse {
   0%, 100% {
-    transform: translateX(0) scale(1);
+    transform: scale(1);
   }
   50% {
-    transform: translateX(10px) scale(1.1);
+    transform: scale(1.05);
   }
 }
 
@@ -656,17 +653,13 @@ body:before{
   border-radius: 20px;
   border: 3px solid #dee2e6;
   opacity: 0;
-  animation: gameRevealPop 0.6s cubic-bezier(0.68, -0.55, 0.27, 1.55) 1.1s forwards;
+  animation: gameRevealFluidSlide 0.7s cubic-bezier(0.23, 1, 0.32, 1) 0.8s forwards;
 }
 
-@keyframes gameRevealPop {
+@keyframes gameRevealFluidSlide {
   0% {
     opacity: 0;
-    transform: translateX(-80px) scale(0.5);
-  }
-  70% {
-    opacity: 1;
-    transform: translateX(5px) scale(1.1);
+    transform: translateX(-40px) scale(0.95);
   }
   100% {
     opacity: 1;
@@ -715,24 +708,7 @@ body:before{
   letter-spacing: 0.02em;
   line-height: 1;
   opacity: 0;
-  animation: gameRevealFlash 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 1.5s forwards;
-}
-
-@keyframes gameRevealFlash {
-  0% {
-    opacity: 0;
-    transform: translateX(-60px) scale(0.7);
-    filter: brightness(2);
-  }
-  50% {
-    opacity: 1;
-    filter: brightness(1.5);
-  }
-  100% {
-    opacity: 1;
-    transform: translateX(0) scale(1);
-    filter: brightness(1);
-  }
+  animation: gameRevealFluidSlide 0.7s cubic-bezier(0.23, 1, 0.32, 1) 1.3s forwards;
 }
 
 /* Team */
@@ -745,7 +721,7 @@ body:before{
   align-items: center;
   gap: 17px;
   opacity: 0;
-  animation: gameRevealSlide 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 1.9s forwards;
+  animation: gameRevealFluidSlide 0.7s cubic-bezier(0.23, 1, 0.32, 1) 1.6s forwards;
 }
 
 .team-emoji {
@@ -759,25 +735,7 @@ body:before{
   align-items: center;
   margin-top: 10px;
   opacity: 0;
-  animation: gameRevealBounce 0.7s cubic-bezier(0.68, -0.55, 0.27, 1.55) 2.2s forwards;
-}
-
-@keyframes gameRevealBounce {
-  0% {
-    opacity: 0;
-    transform: translateX(-100px) translateY(30px) scale(0.5);
-  }
-  60% {
-    opacity: 1;
-    transform: translateX(10px) translateY(-5px) scale(1.1);
-  }
-  80% {
-    transform: translateX(-3px) translateY(2px) scale(0.98);
-  }
-  100% {
-    opacity: 1;
-    transform: translateX(0) translateY(0) scale(1);
-  }
+  animation: gameRevealFluidSlide 0.7s cubic-bezier(0.23, 1, 0.32, 1) 1.9s forwards;
 }
 
 .stat-item-scorecard {
