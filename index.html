@@ -369,9 +369,32 @@ body:before{
 .pre-reveal-subtitle {
   font-family: "Inter", sans-serif;
   font-size: clamp(35px, 5vw, 50px);
-  color: #000000;
+  color: #FFD700;
   margin: 0 0 60px 0;
   font-weight: 600;
+  text-shadow:
+    0 0 10px rgba(255, 215, 0, 0.8),
+    0 0 20px rgba(255, 215, 0, 0.6),
+    0 0 30px rgba(255, 215, 0, 0.4),
+    2px 2px 4px rgba(0, 0, 0, 0.3);
+  animation: sparkle 2s ease-in-out infinite;
+}
+
+@keyframes sparkle {
+  0%, 100% {
+    text-shadow:
+      0 0 10px rgba(255, 215, 0, 0.8),
+      0 0 20px rgba(255, 215, 0, 0.6),
+      0 0 30px rgba(255, 215, 0, 0.4),
+      2px 2px 4px rgba(0, 0, 0, 0.3);
+  }
+  50% {
+    text-shadow:
+      0 0 20px rgba(255, 215, 0, 1),
+      0 0 30px rgba(255, 215, 0, 0.8),
+      0 0 40px rgba(255, 215, 0, 0.6),
+      2px 2px 4px rgba(0, 0, 0, 0.3);
+  }
 }
 
 .start-reveal-button {
