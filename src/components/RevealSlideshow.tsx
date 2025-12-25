@@ -60,11 +60,11 @@ const RevealSlideshow: React.FC<RevealSlideshowProps> = ({ entries, mode }) => {
 
       setTimeout(() => {
         setCurrentIndex(currentIndex + 1);
-      }, 300);
+      }, 600);
 
       setTimeout(() => {
         setIsAnimating(false);
-      }, 900);
+      }, 800);
     }
   };
 
@@ -75,11 +75,11 @@ const RevealSlideshow: React.FC<RevealSlideshowProps> = ({ entries, mode }) => {
 
       setTimeout(() => {
         setCurrentIndex(currentIndex - 1);
-      }, 300);
+      }, 600);
 
       setTimeout(() => {
         setIsAnimating(false);
-      }, 900);
+      }, 800);
     }
   };
 
