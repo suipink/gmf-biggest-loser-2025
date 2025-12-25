@@ -224,6 +224,19 @@ const RevealSlideshow: React.FC<RevealSlideshowProps> = ({ entries, mode }) => {
           </h3>
         </div>
       )}
+
+      {/* Reset Button */}
+      <button
+        className="reset-button"
+        onClick={() => {
+          setHasStarted(false);
+          setCurrentIndex(0);
+          setShowReveal(false);
+        }}
+        title="Reset to start"
+      >
+        ⟲
+      </button>
     </div>
   );
 };
