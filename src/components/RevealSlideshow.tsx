@@ -108,7 +108,7 @@ const RevealSlideshow: React.FC<RevealSlideshowProps> = ({ entries, mode }) => {
   return (
     <div className="reveal-container">
       {/* Main Reveal Card - Horizontal Scorecard Layout */}
-      <div className={`reveal-card ${showReveal ? 'show' : ''} ${getRankClass(currentRanking.rank)} ${isTopThree ? 'top-three-card' : ''}`}>
+      <div key={currentRanking.name} className={`reveal-card ${showReveal ? 'show' : ''} ${getRankClass(currentRanking.rank)} ${isTopThree ? 'top-three-card' : ''}`}>
 
         {/* Left Side: Before/After Photos - Side by Side */}
         <div className="scorecard-left">
@@ -116,6 +116,7 @@ const RevealSlideshow: React.FC<RevealSlideshowProps> = ({ entries, mode }) => {
             <div className="photo-item-large">
               <div className="photo-label-large">BEFORE</div>
               <img
+                key={`before-${currentRanking.name}`}
                 src={currentRanking.beforePhoto || currentRanking.profilePic}
                 alt={`${currentRanking.name} before`}
                 className="scorecard-photo-large"
@@ -128,6 +129,7 @@ const RevealSlideshow: React.FC<RevealSlideshowProps> = ({ entries, mode }) => {
             <div className="photo-item-large">
               <div className="photo-label-large">AFTER</div>
               <img
+                key={`after-${currentRanking.name}`}
                 src={currentRanking.afterPhoto || currentRanking.profilePic}
                 alt={`${currentRanking.name} after`}
                 className="scorecard-photo-large"
