@@ -199,10 +199,23 @@ const RevealSlideshow: React.FC<RevealSlideshowProps> = ({ entries, mode }) => {
 
         {/* Top 3 Extra Decorations */}
         {currentRanking.rank === 1 && (
-          <div className="crown-decoration">👑</div>
+          <>
+            <div className="crown-decoration">👑</div>
+            <div className="winner-particles">✨💫⭐✨💫⭐</div>
+            <div className="winner-glow"></div>
+          </>
+        )}
+        {currentRanking.rank === 2 && (
+          <>
+            <div className="silver-decoration">🥈✨</div>
+            <div className="silver-particles">💎✨💎✨</div>
+          </>
         )}
         {currentRanking.rank === 3 && (
-          <div className="fire-decoration">🔥</div>
+          <>
+            <div className="fire-decoration">🔥💪</div>
+            <div className="bronze-particles">🔥⚡🔥⚡</div>
+          </>
         )}
       </div>
 
