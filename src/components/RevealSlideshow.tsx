@@ -36,6 +36,7 @@ const RevealSlideshow: React.FC<RevealSlideshowProps> = ({ entries, mode }) => {
     .filter(r => !r.hasInsufficientData && r.rank > 0)
     .sort((a, b) => b.rank - a.rank);
 
+  const [hasStarted, setHasStarted] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [showReveal, setShowReveal] = useState(false);
   const [isAnimating, setIsAnimating] = useState(false);
@@ -81,6 +82,25 @@ const RevealSlideshow: React.FC<RevealSlideshowProps> = ({ entries, mode }) => {
       <div style={{ textAlign: 'center', color: '#fff', padding: '40px' }}>
         <div style={{ fontSize: '3em', marginBottom: '20px' }}>🏆</div>
         <div style={{ fontSize: '1.5em' }}>No rankings available</div>
+      </div>
+    );
+  }
+
+  // Pre-reveal screen
+  if (!hasStarted) {
+    return (
+      <div className="pre-reveal-screen">
+        <div className="pre-reveal-content">
+          <div className="pre-reveal-icon">🏆</div>
+          <h2 className="pre-reveal-title">GMF BIGGEST LOSER 2025</h2>
+          <p className="pre-reveal-subtitle">The Results Are In</p>
+          <button
+            className="start-reveal-button"
+            onClick={() => setHasStarted(true)}
+          >
+            START REVEAL
+          </button>
+        </div>
       </div>
     );
   }

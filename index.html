@@ -327,6 +327,79 @@ body:before{
    REVEAL SLIDESHOW STYLES
    =========================== */
 
+/* Pre-Reveal Screen */
+.pre-reveal-screen {
+  min-height: 82vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+}
+
+.pre-reveal-content {
+  text-align: center;
+  animation: fadeInUp 1s ease forwards;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.pre-reveal-icon {
+  font-size: clamp(120px, 15vw, 180px);
+  margin-bottom: 30px;
+  animation: bounce 2s ease-in-out infinite;
+}
+
+.pre-reveal-title {
+  font-family: "Bebas Neue", sans-serif;
+  font-size: clamp(60px, 8vw, 100px);
+  color: var(--ink);
+  margin: 0 0 20px 0;
+  letter-spacing: 0.05em;
+}
+
+.pre-reveal-subtitle {
+  font-family: "Inter", sans-serif;
+  font-size: clamp(28px, 4vw, 40px);
+  color: var(--ink-soft);
+  margin: 0 0 50px 0;
+  font-weight: 500;
+}
+
+.start-reveal-button {
+  font-family: "Bebas Neue", sans-serif;
+  font-size: clamp(36px, 5vw, 52px);
+  padding: 25px 60px;
+  background: linear-gradient(135deg, var(--accent) 0%, #1e40af 100%);
+  color: white;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  letter-spacing: 0.1em;
+  box-shadow: 0 10px 30px rgba(37, 99, 235, 0.3);
+  transition: all 0.3s ease;
+  font-weight: 800;
+}
+
+.start-reveal-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 15px 40px rgba(37, 99, 235, 0.4);
+  background: linear-gradient(135deg, #1e40af 0%, var(--accent) 100%);
+}
+
+.start-reveal-button:active {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 20px rgba(37, 99, 235, 0.3);
+}
+
 .reveal-container {
   max-width: 100%;
   margin: 0 auto;
