@@ -89,7 +89,7 @@ function App() {
       <section className="hero" style={{ minHeight: '12vh', padding: '1rem 0.7rem' }}>
         <h1 className="title" style={{ fontSize: 'clamp(40px, 6vw, 70px)', margin: '0', gap: '10px' }}>
           <img
-            src="GMF Circle Black.png"
+            src="/GMF Circle Black.png"
             alt="GMF Logo"
             style={{
               height: 'clamp(50px, 7vw, 90px)',
