@@ -87,23 +87,22 @@ const RevealSlideshow: React.FC<RevealSlideshowProps> = ({ entries, mode }) => {
 
   return (
     <div className="reveal-container">
-      {/* Rank Announcement */}
-      <div className={`rank-announcement ${showReveal ? 'show' : ''} ${isTopThree ? 'top-three' : ''}`}>
-        <div className="rank-number" style={{
-          fontSize: currentRanking.rank === 1 ? 'clamp(80px, 15vw, 200px)' : 'clamp(60px, 12vw, 150px)',
-          color: currentRanking.rank === 1 ? '#FFD700' : currentRanking.rank === 2 ? '#C0C0C0' : currentRanking.rank === 3 ? '#CD7F32' : '#fff'
-        }}>
-          {getEmojiForRank(currentRanking.rank)}
-        </div>
-        <div className="rank-label" style={{
-          fontSize: currentRanking.rank === 1 ? 'clamp(40px, 8vw, 100px)' : 'clamp(30px, 6vw, 70px)'
-        }}>
-          {currentRanking.rank === 1 ? 'WINNER!' : `${currentRanking.rank}${getRankSuffix(currentRanking.rank)} PLACE`}
-        </div>
-      </div>
-
       {/* Main Reveal Card */}
       <div className={`reveal-card ${showReveal ? 'show' : ''} ${getRankClass(currentRanking.rank)} ${isTopThree ? 'top-three-card' : ''}`}>
+        {/* Rank Announcement Inside Card */}
+        <div className={`rank-announcement-inline ${showReveal ? 'show' : ''} ${isTopThree ? 'top-three' : ''}`}>
+          <div className="rank-number-inline" style={{
+            fontSize: currentRanking.rank === 1 ? 'clamp(60px, 10vw, 120px)' : 'clamp(50px, 8vw, 90px)',
+            color: currentRanking.rank === 1 ? '#FFD700' : currentRanking.rank === 2 ? '#C0C0C0' : currentRanking.rank === 3 ? '#CD7F32' : '#6b7280'
+          }}>
+            {getEmojiForRank(currentRanking.rank)}
+          </div>
+          <div className="rank-label-inline" style={{
+            fontSize: currentRanking.rank === 1 ? 'clamp(30px, 5vw, 60px)' : 'clamp(24px, 4vw, 45px)'
+          }}>
+            {currentRanking.rank === 1 ? 'WINNER!' : `${currentRanking.rank}${getRankSuffix(currentRanking.rank)} PLACE`}
+          </div>
+        </div>
         {/* Before/After Photos */}
         <div className="before-after-container">
           <div className="photo-box before-photo">
