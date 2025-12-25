@@ -87,76 +87,76 @@ const RevealSlideshow: React.FC<RevealSlideshowProps> = ({ entries, mode }) => {
 
   return (
     <div className="reveal-container">
-      {/* Main Reveal Card */}
+      {/* Main Reveal Card - Horizontal Scorecard Layout */}
       <div className={`reveal-card ${showReveal ? 'show' : ''} ${getRankClass(currentRanking.rank)} ${isTopThree ? 'top-three-card' : ''}`}>
-        {/* Rank Announcement Inside Card */}
-        <div className={`rank-announcement-inline ${showReveal ? 'show' : ''} ${isTopThree ? 'top-three' : ''}`}>
-          <div className="rank-number-inline" style={{
-            fontSize: currentRanking.rank === 1 ? 'clamp(60px, 10vw, 120px)' : 'clamp(50px, 8vw, 90px)',
-            color: currentRanking.rank === 1 ? '#FFD700' : currentRanking.rank === 2 ? '#C0C0C0' : currentRanking.rank === 3 ? '#CD7F32' : '#6b7280'
-          }}>
-            {getEmojiForRank(currentRanking.rank)}
-          </div>
-          <div className="rank-label-inline" style={{
-            fontSize: currentRanking.rank === 1 ? 'clamp(30px, 5vw, 60px)' : 'clamp(24px, 4vw, 45px)'
-          }}>
-            {currentRanking.rank === 1 ? 'WINNER!' : `${currentRanking.rank}${getRankSuffix(currentRanking.rank)} PLACE`}
-          </div>
-        </div>
-        {/* Before/After Photos */}
-        <div className="before-after-container">
-          <div className="photo-box before-photo">
-            <div className="photo-label">BEFORE</div>
-            <img
-              src={currentRanking.beforePhoto || currentRanking.profilePic}
-              alt={`${currentRanking.name} before`}
-              className="reveal-photo"
-            />
-            <div className="weight-label">{currentRanking.weighIns[0]?.weight.toFixed(1)} kg</div>
-          </div>
 
-          <div className="transform-arrow">→</div>
+        {/* Left Side: Before/After Photos */}
+        <div className="scorecard-left">
+          <div className="photo-comparison">
+            <div className="photo-item">
+              <div className="photo-label-small">BEFORE</div>
+              <img
+                src={currentRanking.beforePhoto || currentRanking.profilePic}
+                alt={`${currentRanking.name} before`}
+                className="scorecard-photo"
+              />
+              <div className="weight-label-small">{currentRanking.weighIns[0]?.weight.toFixed(1)} kg</div>
+            </div>
 
-          <div className="photo-box after-photo">
-            <div className="photo-label">AFTER</div>
-            <img
-              src={currentRanking.afterPhoto || currentRanking.profilePic}
-              alt={`${currentRanking.name} after`}
-              className="reveal-photo"
-            />
-            <div className="weight-label">{currentRanking.weighIns[currentRanking.weighIns.length - 1]?.weight.toFixed(1)} kg</div>
+            <div className="arrow-vertical">↓</div>
+
+            <div className="photo-item">
+              <div className="photo-label-small">AFTER</div>
+              <img
+                src={currentRanking.afterPhoto || currentRanking.profilePic}
+                alt={`${currentRanking.name} after`}
+                className="scorecard-photo"
+              />
+              <div className="weight-label-small">{currentRanking.weighIns[currentRanking.weighIns.length - 1]?.weight.toFixed(1)} kg</div>
+            </div>
           </div>
         </div>
 
-        {/* Competitor Info */}
-        <div className="competitor-info">
-          <div className="competitor-name-container">
-            <h2 className="competitor-name">{currentRanking.name}</h2>
-            <div className="cheerer-badge-large">
-              {getCheererBadgeContent(currentRanking.cheerer)}
+        {/* Right Side: Info */}
+        <div className="scorecard-right">
+          {/* Rank Badge */}
+          <div className={`rank-badge-scorecard ${getRankClass(currentRanking.rank)}`}>
+            <div className="rank-emoji-large">{getEmojiForRank(currentRanking.rank)}</div>
+            <div className="rank-text-scorecard">
+              {currentRanking.rank === 1 ? 'WINNER!' : `${currentRanking.rank}${getRankSuffix(currentRanking.rank)} PLACE`}
             </div>
           </div>
 
-          <div className="team-name">{currentRanking.cheerer}</div>
+          {/* Name */}
+          <h2 className="competitor-name-scorecard">{currentRanking.name}</h2>
 
-          <div className="stats-container">
-            <div className="stat-box">
-              <div className="stat-label">{currentRanking.percentLoss >= 0 ? 'Weight Loss' : 'Weight Gain'}</div>
-              <div className="stat-value" style={{ color: currentRanking.percentLoss >= 0 ? '#22c55e' : '#ef4444' }}>
+          {/* Team */}
+          <div className="team-name-scorecard">
+            <span className="team-emoji">{getCheererBadgeContent(currentRanking.cheerer)}</span>
+            {currentRanking.cheerer}
+          </div>
+
+          {/* Stats */}
+          <div className="stats-scorecard">
+            <div className="stat-item-scorecard">
+              <div className="stat-label-scorecard">{currentRanking.percentLoss >= 0 ? 'Weight Loss' : 'Weight Gain'}</div>
+              <div className="stat-value-scorecard" style={{ color: currentRanking.percentLoss >= 0 ? '#22c55e' : '#ef4444' }}>
                 {formatPercentage(Math.abs(currentRanking.percentLoss))}
               </div>
             </div>
 
-            <div className="stat-box">
-              <div className="stat-label">{currentRanking.kgLoss >= 0 ? 'Total Lost' : 'Total Gain'}</div>
-              <div className="stat-value" style={{ color: currentRanking.kgLoss >= 0 ? '#22c55e' : '#ef4444' }}>
+            <div className="stat-divider-scorecard"></div>
+
+            <div className="stat-item-scorecard">
+              <div className="stat-label-scorecard">{currentRanking.kgLoss >= 0 ? 'Total Lost' : 'Total Gain'}</div>
+              <div className="stat-value-scorecard" style={{ color: currentRanking.kgLoss >= 0 ? '#22c55e' : '#ef4444' }}>
                 {Math.abs(currentRanking.kgLoss).toFixed(1)} kg
               </div>
             </div>
           </div>
 
           {currentRanking.waApplied && (
-            <div className="wa-badge">
+            <div className="wa-badge-scorecard">
               Anti-dehydration applied
             </div>
           )}
