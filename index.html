@@ -568,14 +568,32 @@ body:before{
 @keyframes photoCardFlip {
   0% {
     opacity: 1;
-    transform: perspective(1000px) rotateY(90deg) scale(0.95);
+    transform: perspective(1200px) rotateY(90deg) rotateZ(-5deg) scale(0.9);
   }
-  50% {
-    opacity: 1;
+  15% {
+    transform: perspective(1200px) rotateY(75deg) rotateZ(3deg) scale(0.92);
+  }
+  25% {
+    transform: perspective(1200px) rotateY(60deg) rotateZ(-2deg) scale(0.94);
+  }
+  35% {
+    transform: perspective(1200px) rotateY(45deg) rotateZ(4deg) scale(0.96);
+  }
+  45% {
+    transform: perspective(1200px) rotateY(30deg) rotateZ(-3deg) scale(0.98);
+  }
+  55% {
+    transform: perspective(1200px) rotateY(15deg) rotateZ(2deg) scale(0.99);
+  }
+  70% {
+    transform: perspective(1200px) rotateY(5deg) rotateZ(-1deg) scale(1.02);
+  }
+  85% {
+    transform: perspective(1200px) rotateY(-2deg) rotateZ(1deg) scale(1.01);
   }
   100% {
     opacity: 1;
-    transform: perspective(1000px) rotateY(0deg) scale(1);
+    transform: perspective(1200px) rotateY(0deg) rotateZ(0deg) scale(1);
   }
 }
 
